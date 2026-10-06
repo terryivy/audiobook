@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>球状闪电 · 有声听书</title>
+<link rel="stylesheet" href="styles.css">
+<script src="data/books.js"></script>
+</head>
+<body>
+<div id="bg"><div class="stars"></div><div class="glow-ball"></div></div>
+<div id="app">
+
+  <!-- 首页 -->
+  <section id="screen-home" class="screen active">
+    <header class="home-head">
+      <div class="logo">⚡</div>
+      <div class="home-title">
+        <h1>球状闪电</h1>
+        <p>· 有声听书 · 沉浸式科幻</p>
+      </div>
+      <div class="seg lang-seg" id="langSeg">
+        <button data-lang="zh" class="on">中文</button>
+        <button data-lang="en">EN</button>
+      </div>
+    </header>
+    <div id="continue-card" class="glass-card hidden">
+      <div class="cc-tag">· 正在播放</div>
+      <div class="cc-title" id="cc-title"></div>
+      <div class="cc-sub" id="cc-sub"></div>
+      <button class="cc-play" id="cc-play">▶</button>
+    </div>
+    <div class="sec-head"><h2>我的书架</h2><span class="sec-more" id="go-shelf">查看全部 ›</span></div>
+    <div id="home-books" class="book-row"></div>
+    <div class="sec-head"><h2>全部作品</h2></div>
+    <div id="home-all"></div>
+  </section>
+
+  <!-- 书架 -->
+  <section id="screen-shelf" class="screen">
+    <header class="page-head"><h1>书架</h1><p>收藏的每一束电光</p></header>
+    <div id="shelf-list"></div>
+  </section>
+
+  <!-- 章节列表 -->
+  <section id="screen-chapters" class="screen">
+    <div class="topbar">
+      <button class="icon-btn" id="btn-ch-back">‹</button>
+      <h2 id="ch-book-title">章节</h2>
+      <span class="topbar-spacer"></span>
+    </div>
+    <div class="book-hero glass-card" id="book-hero"></div>
+    <div id="chapter-list"></div>
+  </section>
+
+  <!-- 播放器 -->
+  <section id="screen-player" class="screen">
+    <div class="topbar">
+      <button class="icon-btn" id="btn-player-back">‹</button>
+      <h2>有声小说</h2>
+      <span class="topbar-spacer"></span>
+    </div>
+    <div class="album-wrap">
+      <div class="album-ring"></div>
+      <div class="album" id="player-cover">⚡</div>
+    </div>
+    <div class="player-book" id="player-book"></div>
+    <div class="player-title" id="player-title"></div>
+    <div class="player-progress">
+      <input type="range" id="seek" min="0" max="1000" value="0">
+      <div class="time-row"><span id="t-cur">00:00</span><span id="t-dur">00:00</span></div>
+    </div>
+    <div class="player-controls">
+      <div class="ctl-item"><button class="pbtn" id="btn-fav">♡</button><span>收藏</span></div>
+      <div class="ctl-item"><button class="pbtn" id="btn-prev-ch">⏮</button><span>上一章</span></div>
+      <div class="ctl-item"><button class="pbtn play" id="btn-play">▶</button></div>
+      <div class="ctl-item"><button class="pbtn" id="btn-next-ch">⏭</button><span>下一章</span></div>
+      <div class="ctl-item"><button class="pbtn" id="btn-speed">1.0x</button><span>倍速</span></div>
+    </div>
+    <div class="player-row">
+      <button class="chip-btn" id="btn-back15">↺ 15秒</button>
+      <button class="chip-btn" id="btn-fwd15">15秒 ↻</button>
+      <button class="chip-btn" id="btn-text-view" style="display:none">📖 文字</button>
+    </div>
+    <div class="player-row">
+      <div class="seg sm" id="sleepSeg">
+        <button data-m="0" class="on">⏰ 关</button>
+        <button data-m="15">15分</button>
+        <button data-m="30">30分</button>
+        <button data-m="60">60分</button>
+      </div>
+    </div>
+    <div id="text-view" class="hidden">
+      <div class="text-view-head">
+        <span id="text-view-title">文字</span>
+        <button class="icon-btn sm" id="btn-text-close">✕</button>
+      </div>
+      <div id="text-view-body"></div>
+    </div>
+  </section>
+
+  <!-- 我的 -->
+  <section id="screen-profile" class="screen">
+    <header class="page-head"><h1>我的</h1><p>在雷暴中安放耳朵</p></header>
+    <div class="user-card glass-card">
+      <div class="user-avatar">⚡</div>
+      <div class="user-info"><div class="user-name">听书者</div><div class="user-sub" id="user-stats">已收听 0 章</div></div>
+    </div>
+    <div class="menu-list">
+      <div class="menu-item glass-card" id="menu-fav"><span>♥ 我的收藏</span><span class="menu-arrow">›</span></div>
+      <div class="menu-item glass-card" id="menu-hist"><span>🕘 播放历史</span><span class="menu-arrow">›</span></div>
+      <div class="menu-item glass-card" id="menu-about"><span>ℹ️ 关于</span><span class="menu-arrow">›</span></div>
+    </div>
+    <div id="profile-detail"></div>
+  </section>
+
+  <!-- 底部导航 -->
+  <nav id="tabbar">
+    <button data-tab="screen-home" class="on"><span class="tab-ico">⌂</span><span>首页</span></button>
+    <button data-tab="screen-shelf"><span class="tab-ico">▤</span><span>书架</span></button>
+    <button data-tab="screen-player"><span class="tab-ico">🎧</span><span>播放器</span></button>
+    <button data-tab="screen-profile"><span class="tab-ico">◯</span><span>我的</span></button>
+  </nav>
+
+  <!-- 迷你播放条 -->
+  <div id="mini-player" class="hidden">
+    <div class="mini-cover" id="mini-cover">⚡</div>
+    <div class="mini-info">
+      <div class="mini-title" id="mini-title"></div>
+      <div class="mini-sub" id="mini-sub"></div>
+    </div>
+    <button class="mini-btn" id="mini-play">▶</button>
+  </div>
+</div>
+<audio id="audio" preload="metadata"></audio>
+<script src="app.js"></script>
+</body>
+</html>
