@@ -164,7 +164,9 @@ $("btn-ch-back").onclick = function(){ show(lastTab); };
 /* ---------- 文字跟读 ---------- */
 var qzText = null, qzSync = null, textViewOpen = false, textParas = [], textChars = [], lastParaIdx = -1;
 function loadQzText(cb){
+  if(window.QZ_TEXT){ qzText = window.QZ_TEXT; }
   if(qzText){ cb && cb(); return; }
+  // 兜底：尝试 fetch
   fetch("data/qz_text.json").then(function(r){ return r.json(); }).then(function(j){
     qzText = j; cb && cb();
   }).catch(function(){ cb && cb(); });
